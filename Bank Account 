@@ -1,0 +1,84 @@
+Interface BankAccount {
+    Void deposit(double amount) throws Exception;
+    Void withdraw(double amount) throws Exception;
+    Void balanceEnquiry();
+}
+
+Class Bank implements BankAccount {
+    Double balance;
+    String accountHolderName;
+    Int accountNumber;
+
+    Public Bank(String accountHolderName, int accountNumber, double initialBalance) {
+        This.accountHolderName = accountHolderName;
+        This.accountNumber = accountNumber;
+        This.balance = initialBalance;
+    }
+
+    Public void deposit(double amount) {
+        If (amount <= 0) {
+            Throw new IllegalArgumentException(“Invalid deposit amount”);
+        }
+        Balance = balance + amount;
+        System.out.println(“Amount deposited succesfully”);
+    }
+
+    Public void withdraw(double amount) throws Exception {
+        If (amount <= 0) {
+            Throw new Exception(“Invalid withdrawal amount”);
+        }
+        If (amount > balance) {
+            Throw new Exception(“Insufficient balance”);
+        }
+        Balance = balance – amount;
+        System.out.println(“Amount withdrawn Successfully”);
+    }
+
+    Public void balanceEnquiry() {
+        System.out.println(“Available balance:Rs.” + balance);
+    }
+}
+
+Class BankOperations {
+    Public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print(“Account holder name:”);
+        String name = sc.nextLine();
+
+        System.out.print(“Account number:”);
+        Int accNo = sc.nextInt();
+
+        System.out.print(“Initial balance:”);
+        Double initBalance = sc.nextDouble();
+       
+        Sc.nextLine(); // consume newline
+
+        System.out.print(“operation:”);
+        String operation = sc.nextLine();
+
+        Bank b = new Bank(name, accNo, initBalance);
+
+        Try {
+            If (operation.equalsIgnoreCase(“Deposit”)) {
+                System.out.print(“Deposit amount:”);
+                Double d = sc.nextDouble();
+                b.deposit(d);
+                b.balanceEnquiry();
+            } else if (operation.equalsIgnoreCase(“Withdraw”)) {
+                System.out.print(“Withdraw amount:”);
+                Double w = sc.nextDouble();
+                b.withdraw(w);
+                b.balanceEnquiry();
+            } else {
+                System.out.println(“Error: Invalid operation”);
+            }
+        } catch (Exception e) {
+            System.out.println(“Exception:” + e.getMessage());
+            System.out.println(“Transaction failed”);
+            b.balanceEnquiry();
+        } finally {
+            Sc.close();
+        }
+    }
+}
